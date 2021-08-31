@@ -9,7 +9,7 @@ import javax.persistence.Id
 class Customer (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Int,
+    var id: Int? = null,
     var name: String,
     var email: String
 )
