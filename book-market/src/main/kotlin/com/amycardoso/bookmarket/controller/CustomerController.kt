@@ -5,7 +5,6 @@ import com.amycardoso.bookmarket.controller.request.PutCustomerRequest
 import com.amycardoso.bookmarket.extension.toCustomerModel
 import com.amycardoso.bookmarket.model.Customer
 import com.amycardoso.bookmarket.service.CustomerService
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
