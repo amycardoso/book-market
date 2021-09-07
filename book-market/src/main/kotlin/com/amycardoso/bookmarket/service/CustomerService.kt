@@ -14,7 +14,7 @@ class CustomerService (
     }
 
     fun update(customer: Customer) {
-        if(!repository.existsById(customer.id)){
+        if(!repository.existsById(customer.id!!)){
             throw Exception()
         }
         repository.save(customer)
