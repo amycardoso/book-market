@@ -6,36 +6,36 @@ import org.springframework.stereotype.Service
 
 @Service
 class CustomerService (
-    val repository : CustomerRepository
+    val customerRepository : CustomerRepository,
+    val bookService: BookService
 ){
 
     fun create(customer: Customer) {
-        repository.save(customer)
+        customerRepository.save(customer)
     }
 
     fun update(customer: Customer) {
-        if(!repository.existsById(customer.id!!)){
+        if(!customerRepository.existsById(customer.id!!)){
             throw Exception()
         }
-        repository.save(customer)
+        customerRepository.save(customer)
     }
 
     fun findAll(name: String?): List<Customer> {
         name?.let {
-            return repository.findByNameContaining(it)
+            return customerRepository.findByNameContaining(it)
         }
-        return repository.findAll().toList()
+        return customerRepository.findAll().toList()
     }
 
     fun findById(id: Int): Customer {
-        return repository.findById(id).orElseThrow()
+        return customerRepository.findById(id).orElseThrow()
     }
 
     fun delete(id: Int) {
-        if(!repository.existsById(id)){
-            throw Exception()
-        }
-        repository.deleteById(id)
+        val customer = findById(id)
+        bookService.deleteByCustomer(customer)
+        customerRepository.deleteById(id)
     }
 
 }

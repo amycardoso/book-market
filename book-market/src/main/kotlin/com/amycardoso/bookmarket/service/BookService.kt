@@ -2,6 +2,7 @@ package com.amycardoso.bookmarket.service
 
 import com.amycardoso.bookmarket.enums.BookStatus
 import com.amycardoso.bookmarket.model.Book
+import com.amycardoso.bookmarket.model.Customer
 import com.amycardoso.bookmarket.repository.BookRepository
 import org.springframework.stereotype.Service
 
@@ -34,5 +35,13 @@ class BookService(
 
     fun update(book: Book) {
         bookRepository.save(book)
+    }
+
+    fun deleteByCustomer(customer: Customer) {
+        val books = bookRepository.findByCustomer(customer)
+        for(book in books) {
+            book.status = BookStatus.DELETED
+        }
+        bookRepository.saveAll(books)
     }
 }
