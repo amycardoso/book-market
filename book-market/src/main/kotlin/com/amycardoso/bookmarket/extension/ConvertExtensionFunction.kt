@@ -2,6 +2,7 @@ package com.amycardoso.bookmarket.extension
 
 import com.amycardoso.bookmarket.controller.request.PostBookRequest
 import com.amycardoso.bookmarket.controller.request.PostCustomerRequest
+import com.amycardoso.bookmarket.controller.request.PutBookRequest
 import com.amycardoso.bookmarket.controller.request.PutCustomerRequest
 import com.amycardoso.bookmarket.enums.BookStatus
 import com.amycardoso.bookmarket.model.Book
@@ -21,5 +22,15 @@ fun PostBookRequest.toBookModel(customer: Customer): Book {
         price = this.price,
         status = BookStatus.ACTIVE,
         customer = customer
+    )
+}
+
+fun PutBookRequest.toBookModel(previousValue: Book): Book {
+    return Book(
+        id = previousValue.id,
+        name = this.name ?: previousValue.name,
+        price = this.price ?: previousValue.price,
+        status = previousValue.status,
+        customer = previousValue.customer
     )
 }
