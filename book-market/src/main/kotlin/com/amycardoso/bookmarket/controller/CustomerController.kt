@@ -2,7 +2,9 @@ package com.amycardoso.bookmarket.controller
 
 import com.amycardoso.bookmarket.controller.request.PostCustomerRequest
 import com.amycardoso.bookmarket.controller.request.PutCustomerRequest
+import com.amycardoso.bookmarket.controller.response.CustomerResponse
 import com.amycardoso.bookmarket.extension.toCustomerModel
+import com.amycardoso.bookmarket.extension.toResponse
 import com.amycardoso.bookmarket.model.Customer
 import com.amycardoso.bookmarket.service.CustomerService
 import org.springframework.http.HttpStatus
@@ -15,8 +17,8 @@ class CustomerController (
     val customerService: CustomerService
 ){
     @GetMapping
-    fun getAll(@RequestParam name: String?): ResponseEntity<List<Customer>> {
-        return ResponseEntity.ok(customerService.findAll(name))
+    fun getAll(@RequestParam name: String?): ResponseEntity<List<CustomerResponse>> {
+        return ResponseEntity.ok(customerService.findAll(name).map { it.toResponse() })
     }
 
     @PostMapping
@@ -26,8 +28,8 @@ class CustomerController (
     }
 
     @GetMapping("/{id}")
-    fun getCustomer(@PathVariable id: Int): ResponseEntity<Customer> {
-        return ResponseEntity.ok(customerService.findById(id));
+    fun getCustomer(@PathVariable id: Int): ResponseEntity<CustomerResponse> {
+        return ResponseEntity.ok(customerService.findById(id).toResponse());
     }
 
     @PutMapping("/{id}")

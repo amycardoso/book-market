@@ -2,7 +2,9 @@ package com.amycardoso.bookmarket.controller
 
 import com.amycardoso.bookmarket.controller.request.PostBookRequest
 import com.amycardoso.bookmarket.controller.request.PutBookRequest
+import com.amycardoso.bookmarket.controller.response.BookResponse
 import com.amycardoso.bookmarket.extension.toBookModel
+import com.amycardoso.bookmarket.extension.toResponse
 import com.amycardoso.bookmarket.model.Book
 import com.amycardoso.bookmarket.service.BookService
 import com.amycardoso.bookmarket.service.CustomerService
@@ -24,17 +26,17 @@ class BookController (
     }
 
     @GetMapping
-    fun findAll(): List<Book> {
-        return bookService.findAll()
+    fun findAll(): List<BookResponse> {
+        return bookService.findAll().map { it.toResponse() }
     }
 
     @GetMapping("/active")
-    fun findActives(): List<Book> =
-        bookService.findActives()
+    fun findActives(): List<BookResponse> =
+        bookService.findActives().map { it.toResponse() }
 
     @GetMapping("/{id}")
-    fun findById(@PathVariable id: Int): Book {
-        return bookService.findById(id)
+    fun findById(@PathVariable id: Int): BookResponse {
+        return bookService.findById(id).toResponse()
     }
 
     @DeleteMapping("/{id}")

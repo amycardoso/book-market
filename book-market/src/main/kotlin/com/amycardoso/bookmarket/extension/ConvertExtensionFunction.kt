@@ -4,6 +4,8 @@ import com.amycardoso.bookmarket.controller.request.PostBookRequest
 import com.amycardoso.bookmarket.controller.request.PostCustomerRequest
 import com.amycardoso.bookmarket.controller.request.PutBookRequest
 import com.amycardoso.bookmarket.controller.request.PutCustomerRequest
+import com.amycardoso.bookmarket.controller.response.BookResponse
+import com.amycardoso.bookmarket.controller.response.CustomerResponse
 import com.amycardoso.bookmarket.enums.BookStatus
 import com.amycardoso.bookmarket.enums.CustomerStatus
 import com.amycardoso.bookmarket.model.Book
@@ -33,5 +35,24 @@ fun PutBookRequest.toBookModel(previousValue: Book): Book {
         price = this.price ?: previousValue.price,
         status = previousValue.status,
         customer = previousValue.customer
+    )
+}
+
+fun Customer.toResponse(): CustomerResponse {
+    return CustomerResponse(
+        id = this.id,
+        name = this.name,
+        email = this.email,
+        status = this.status
+    )
+}
+
+fun Book.toResponse(): BookResponse {
+    return BookResponse(
+        id = this.id,
+        name = this.name,
+        price = this.price,
+        customer = this.customer,
+        status = this.status
     )
 }
