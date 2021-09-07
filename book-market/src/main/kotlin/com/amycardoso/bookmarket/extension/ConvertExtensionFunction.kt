@@ -5,15 +5,16 @@ import com.amycardoso.bookmarket.controller.request.PostCustomerRequest
 import com.amycardoso.bookmarket.controller.request.PutBookRequest
 import com.amycardoso.bookmarket.controller.request.PutCustomerRequest
 import com.amycardoso.bookmarket.enums.BookStatus
+import com.amycardoso.bookmarket.enums.CustomerStatus
 import com.amycardoso.bookmarket.model.Book
 import com.amycardoso.bookmarket.model.Customer
 
 fun PostCustomerRequest.toCustomerModel(): Customer {
-    return Customer(name = this.name, email = this.email)
+    return Customer(name = this.name, email = this.email, status = CustomerStatus.ACTIVE)
 }
 
-fun PutCustomerRequest.toCustomerModel(id: Int): Customer {
-    return Customer(id = id, name = this.name, email = this.email)
+fun PutCustomerRequest.toCustomerModel(previousValue: Customer): Customer {
+    return Customer(id = previousValue.id, name = this.name, email = this.email, status = previousValue.status)
 }
 
 fun PostBookRequest.toBookModel(customer: Customer): Book {
