@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -28,18 +29,18 @@ class BookController (
     }
 
     @GetMapping
-    fun findAll(@PageableDefault(page = 0, size = 10) pageable: Pageable): Page<BookResponse> {
-        return bookService.findAll(pageable).map { it.toResponse() }
+    fun findAll(@PageableDefault(page = 0, size = 10) pageable: Pageable): ResponseEntity<Page<BookResponse>> {
+        return ResponseEntity.ok(bookService.findAll(pageable).map { it.toResponse() })
     }
 
     @GetMapping("/active")
-    fun findActives(@PageableDefault(page = 0, size = 10) pageable: Pageable): Page<BookResponse> {
-        return bookService.findActives(pageable).map { it.toResponse() }
+    fun findActives(@PageableDefault(page = 0, size = 10) pageable: Pageable): ResponseEntity<Page<BookResponse>> {
+        return ResponseEntity.ok(bookService.findActives(pageable).map { it.toResponse() })
     }
 
     @GetMapping("/{id}")
-    fun findById(@PathVariable id: Int): BookResponse {
-        return bookService.findById(id).toResponse()
+    fun findById(@PathVariable id: Int): ResponseEntity<BookResponse> {
+        return ResponseEntity.ok(bookService.findById(id).toResponse())
     }
 
     @DeleteMapping("/{id}")
