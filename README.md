@@ -1,2 +1,2 @@
-# book-market
- Book marketplace
+# book-marketplace
+A simple API for a book marketplace implemented with kotlin + spring
