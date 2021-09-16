@@ -5,7 +5,6 @@ import com.amycardoso.bookmarket.controller.request.PutCustomerRequest
 import com.amycardoso.bookmarket.controller.response.CustomerResponse
 import com.amycardoso.bookmarket.extension.toCustomerModel
 import com.amycardoso.bookmarket.extension.toResponse
-import com.amycardoso.bookmarket.model.Customer
 import com.amycardoso.bookmarket.service.CustomerService
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -32,7 +31,7 @@ class CustomerController (
 
     @GetMapping("/{id}")
     fun getCustomer(@PathVariable id: Int): ResponseEntity<CustomerResponse> {
-        return ResponseEntity.ok(customerService.findById(id).toResponse());
+        return ResponseEntity.ok(customerService.findById(id).toResponse())
     }
 
     @PutMapping("/{id}")
