@@ -8,4 +8,5 @@ import org.springframework.data.repository.CrudRepository
 
 interface CustomerRepository : JpaRepository<Customer, Int> {
     fun findByNameContaining(name: String, pageable: Pageable): Page<Customer>
+    fun existsByEmail(email: String): Boolean
 }

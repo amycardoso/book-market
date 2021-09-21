@@ -1,6 +1,7 @@
 package com.amycardoso.bookmarket.service
 
 import com.amycardoso.bookmarket.enums.BookStatus
+import com.amycardoso.bookmarket.exception.NotFoundException
 import com.amycardoso.bookmarket.model.Book
 import com.amycardoso.bookmarket.model.Customer
 import com.amycardoso.bookmarket.repository.BookRepository
@@ -26,7 +27,7 @@ class BookService(
     }
 
     fun findById(id: Int): Book {
-        return bookRepository.findById(id).orElseThrow()
+        return bookRepository.findById(id).orElseThrow{ NotFoundException("Book not exists") }
     }
 
     fun delete(id: Int) {

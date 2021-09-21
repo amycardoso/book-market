@@ -1,6 +1,7 @@
 package com.amycardoso.bookmarket.service
 
 import com.amycardoso.bookmarket.enums.CustomerStatus
+import com.amycardoso.bookmarket.exception.NotFoundException
 import com.amycardoso.bookmarket.model.Customer
 import com.amycardoso.bookmarket.repository.CustomerRepository
 import org.springframework.data.domain.Page
@@ -32,7 +33,7 @@ class CustomerService (
     }
 
     fun findById(id: Int): Customer {
-        return customerRepository.findById(id).orElseThrow()
+        return customerRepository.findById(id).orElseThrow{ NotFoundException("Customer not exists") }
     }
 
     fun delete(id: Int) {
@@ -40,6 +41,10 @@ class CustomerService (
         bookService.deleteByCustomer(customer)
         customer.status = CustomerStatus.INACTIVE
         customerRepository.save(customer)
+    }
+
+    fun emailAvailable(email: String): Boolean {
+        return !customerRepository.existsByEmail(email)
     }
 
 }
