@@ -1,5 +1,9 @@
 package com.amycardoso.bookmarket.model
 
+import java.math.BigDecimal
+import java.time.LocalDateTime
+import javax.persistence.*
+
 @Entity(name = "purchase")
 data class Purchase(
 
