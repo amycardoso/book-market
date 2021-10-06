@@ -5,7 +5,7 @@ import com.amycardoso.bookmarket.enums.Profile
 import javax.persistence.*
 
 @Entity(name = "customer")
-class Customer (
+data class Customer (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Int? = null,

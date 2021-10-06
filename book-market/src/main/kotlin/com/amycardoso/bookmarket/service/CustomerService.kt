@@ -1,21 +1,28 @@
 package com.amycardoso.bookmarket.service
 
 import com.amycardoso.bookmarket.enums.CustomerStatus
+import com.amycardoso.bookmarket.enums.Profile
 import com.amycardoso.bookmarket.exception.NotFoundException
 import com.amycardoso.bookmarket.model.Customer
 import com.amycardoso.bookmarket.repository.CustomerRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 
 @Service
 class CustomerService (
-    val customerRepository : CustomerRepository,
-    val bookService: BookService
+    private val customerRepository : CustomerRepository,
+    private val bookService: BookService,
+    private val bCrypt: BCryptPasswordEncoder
 ){
 
     fun create(customer: Customer) {
-        customerRepository.save(customer)
+        val customerCopy = customer.copy(
+            roles = setOf(Profile.CUSTOMER),
+            password = bCrypt.encode(customer.password)
+        )
+        customerRepository.save(customerCopy)
     }
 
     fun update(customer: Customer) {
