@@ -2,6 +2,7 @@ package com.amycardoso.bookmarket.config
 
 import com.amycardoso.bookmarket.repository.CustomerRepository
 import com.amycardoso.bookmarket.security.AuthenticationFilter
+import com.amycardoso.bookmarket.security.AuthorizationFilter
 import com.amycardoso.bookmarket.security.JwtUtil
 import com.amycardoso.bookmarket.service.UserDetailsCustomService
 import org.springframework.context.annotation.Bean
@@ -38,6 +39,7 @@ class SecurityConfig (
             .antMatchers(HttpMethod.POST, *PUBLIC_POST_MATCHERS).permitAll()
             .anyRequest().authenticated()
         http.addFilter(AuthenticationFilter(authenticationManager(), customerRepository, jwtUtil))
+        http.addFilter(AuthorizationFilter(authenticationManager(), userDetails, jwtUtil))
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
     }
 
