@@ -1,7 +1,6 @@
 package com.amycardoso.bookmarket.service
 
 import com.amycardoso.bookmarket.enums.CustomerStatus
-import com.amycardoso.bookmarket.enums.Profile
 import com.amycardoso.bookmarket.exception.NotFoundException
 import com.amycardoso.bookmarket.model.Customer
 import com.amycardoso.bookmarket.repository.CustomerRepository

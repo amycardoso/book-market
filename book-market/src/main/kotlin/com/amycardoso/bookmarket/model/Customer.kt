@@ -1,7 +1,7 @@
 package com.amycardoso.bookmarket.model
 
 import com.amycardoso.bookmarket.enums.CustomerStatus
-import com.amycardoso.bookmarket.enums.Profile
+import com.amycardoso.bookmarket.enums.Role
 import javax.persistence.*
 
 @Entity(name = "customer")
@@ -20,7 +20,7 @@ data class Customer (
     val password: String,
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
-    @ElementCollection(targetClass = Profile::class, fetch = FetchType.EAGER)
+    @ElementCollection(targetClass = Role::class, fetch = FetchType.EAGER)
     @CollectionTable(name = "customer_roles", joinColumns = [JoinColumn(name = "customer_id")])
-    var roles: Set<Profile> = setOf()
+    var roles: Set<Role> = setOf()
 )
