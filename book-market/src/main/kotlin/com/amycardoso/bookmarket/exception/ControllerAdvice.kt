@@ -44,4 +44,15 @@ class ControllerAdvice {
 
         return ResponseEntity(error, HttpStatus.UNPROCESSABLE_ENTITY)
     }
+
+    @ExceptionHandler(AccessDeniedException::class)
+    fun handleAccessDeniedException(ex: AccessDeniedException, request: WebRequest): ResponseEntity<ErrorResponse> {
+        val error = ErrorResponse(
+            HttpStatus.FORBIDDEN.value(),
+            "Access Denied",
+            null
+        )
+
+        return ResponseEntity(error, HttpStatus.FORBIDDEN)
+    }
 }
