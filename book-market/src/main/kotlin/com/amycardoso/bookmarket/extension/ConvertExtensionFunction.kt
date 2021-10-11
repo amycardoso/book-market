@@ -6,17 +6,30 @@ import com.amycardoso.bookmarket.controller.request.PutBookRequest
 import com.amycardoso.bookmarket.controller.request.PutCustomerRequest
 import com.amycardoso.bookmarket.controller.response.BookResponse
 import com.amycardoso.bookmarket.controller.response.CustomerResponse
+import com.amycardoso.bookmarket.controller.response.PageResponse
 import com.amycardoso.bookmarket.enums.BookStatus
 import com.amycardoso.bookmarket.enums.CustomerStatus
 import com.amycardoso.bookmarket.model.Book
 import com.amycardoso.bookmarket.model.Customer
+import org.springframework.data.domain.Page
 
 fun PostCustomerRequest.toCustomerModel(): Customer {
-    return Customer(name = this.name, email = this.email, status = CustomerStatus.ACTIVE)
+    return Customer(
+        name = this.name,
+        email = this.email,
+        status = CustomerStatus.ACTIVE,
+        password = this.password
+    )
 }
 
 fun PutCustomerRequest.toCustomerModel(previousValue: Customer): Customer {
-    return Customer(id = previousValue.id, name = this.name, email = this.email, status = previousValue.status)
+    return Customer(
+        id = previousValue.id,
+        name = this.name,
+        email = this.email,
+        status = previousValue.status,
+        password = previousValue.password
+    )
 }
 
 fun PostBookRequest.toBookModel(customer: Customer): Book {
@@ -55,4 +68,12 @@ fun Book.toResponse(): BookResponse {
         customer = this.customer,
         status = this.status
     )
+}
+
+fun <T> Page<T>.toPageResponse(): PageResponse<T> {
+    return PageResponse(
+        this.content,
+        this.number,
+        this.totalElements,
+        this.totalPages)
 }

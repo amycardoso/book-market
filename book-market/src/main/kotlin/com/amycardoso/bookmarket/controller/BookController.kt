@@ -3,7 +3,9 @@ package com.amycardoso.bookmarket.controller
 import com.amycardoso.bookmarket.controller.request.PostBookRequest
 import com.amycardoso.bookmarket.controller.request.PutBookRequest
 import com.amycardoso.bookmarket.controller.response.BookResponse
+import com.amycardoso.bookmarket.controller.response.PageResponse
 import com.amycardoso.bookmarket.extension.toBookModel
+import com.amycardoso.bookmarket.extension.toPageResponse
 import com.amycardoso.bookmarket.extension.toResponse
 import com.amycardoso.bookmarket.service.BookService
 import com.amycardoso.bookmarket.service.CustomerService
@@ -16,10 +18,10 @@ import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
 @RestController
-@RequestMapping("book")
+@RequestMapping("books")
 class BookController (
-    val bookService: BookService,
-    val customerService: CustomerService
+    private val bookService: BookService,
+    private val customerService: CustomerService
 ) {
 
     @PostMapping
@@ -30,13 +32,18 @@ class BookController (
     }
 
     @GetMapping
-    fun findAll(@PageableDefault(page = 0, size = 10) pageable: Pageable): ResponseEntity<Page<BookResponse>> {
-        return ResponseEntity.ok(bookService.findAll(pageable).map { it.toResponse() })
+    fun findAll(@PageableDefault(page = 0, size = 10) pageable: Pageable): ResponseEntity<PageResponse<BookResponse>> {
+        return ResponseEntity.ok(bookService.findAll(pageable).map { it.toResponse() }.toPageResponse())
     }
 
     @GetMapping("/active")
-    fun findActives(@PageableDefault(page = 0, size = 10) pageable: Pageable): ResponseEntity<Page<BookResponse>> {
-        return ResponseEntity.ok(bookService.findActives(pageable).map { it.toResponse() })
+    fun findActives(
+        @PageableDefault(
+            page = 0,
+            size = 10
+        ) pageable: Pageable
+    ): ResponseEntity<PageResponse<BookResponse>> {
+        return ResponseEntity.ok(bookService.findActives(pageable).map { it.toResponse() }.toPageResponse())
     }
 
     @GetMapping("/{id}")

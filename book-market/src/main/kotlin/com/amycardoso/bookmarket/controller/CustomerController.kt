@@ -3,7 +3,9 @@ package com.amycardoso.bookmarket.controller
 import com.amycardoso.bookmarket.controller.request.PostCustomerRequest
 import com.amycardoso.bookmarket.controller.request.PutCustomerRequest
 import com.amycardoso.bookmarket.controller.response.CustomerResponse
+import com.amycardoso.bookmarket.controller.response.PageResponse
 import com.amycardoso.bookmarket.extension.toCustomerModel
+import com.amycardoso.bookmarket.extension.toPageResponse
 import com.amycardoso.bookmarket.extension.toResponse
 import com.amycardoso.bookmarket.security.UserCanOnlyAccessTheirOwnResource
 import com.amycardoso.bookmarket.service.CustomerService
@@ -18,11 +20,14 @@ import javax.validation.Valid
 @RestController
 @RequestMapping("customers")
 class CustomerController (
-    val customerService: CustomerService
+    private val customerService: CustomerService
 ){
     @GetMapping
-    fun getAll(@RequestParam name: String?, @PageableDefault(page = 0, size = 10) pageable: Pageable): ResponseEntity<Page<CustomerResponse>> {
-        return ResponseEntity.ok(customerService.findAll(name, pageable).map { it.toResponse() })
+    fun getAll(
+        @RequestParam name: String?,
+        @PageableDefault(page = 0, size = 10) pageable: Pageable
+    ): ResponseEntity<PageResponse<CustomerResponse>> {
+        return ResponseEntity.ok(customerService.findAll(name, pageable).map { it.toResponse() }.toPageResponse())
     }
 
     @PostMapping
