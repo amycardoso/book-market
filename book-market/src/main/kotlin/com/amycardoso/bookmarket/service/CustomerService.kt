@@ -1,6 +1,7 @@
 package com.amycardoso.bookmarket.service
 
 import com.amycardoso.bookmarket.enums.CustomerStatus
+import com.amycardoso.bookmarket.enums.Role
 import com.amycardoso.bookmarket.exception.NotFoundException
 import com.amycardoso.bookmarket.model.Customer
 import com.amycardoso.bookmarket.repository.CustomerRepository
@@ -18,7 +19,7 @@ class CustomerService (
 
     fun create(customer: Customer) {
         val customerCopy = customer.copy(
-            roles = setOf(Profile.CUSTOMER),
+            roles = setOf(Role.CUSTOMER),
             password = bCrypt.encode(customer.password)
         )
         customerRepository.save(customerCopy)
@@ -26,7 +27,7 @@ class CustomerService (
 
     fun update(customer: Customer) {
         if(!customerRepository.existsById(customer.id!!)){
-            throw Exception()
+            throw NotFoundException("Customer [${customer.id}] not exists")
         }
         customerRepository.save(customer)
     }
@@ -39,7 +40,7 @@ class CustomerService (
     }
 
     fun findById(id: Int): Customer {
-        return customerRepository.findById(id).orElseThrow{ NotFoundException("Customer not exists") }
+        return customerRepository.findById(id).orElseThrow{ NotFoundException("Customer [${id}] not exists") }
     }
 
     fun delete(id: Int) {
