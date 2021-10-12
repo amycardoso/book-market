@@ -180,7 +180,7 @@ class CustomerServiceTest {
 
     @Test
     fun `should return true when email available`() {
-        val email = "${Random().nextInt().toString()}@email.com"
+        val email = "${Random().nextInt()}@email.com"
 
         every { customerRepository.existsByEmail(email) } returns false
 
@@ -200,7 +200,6 @@ class CustomerServiceTest {
 
         assertFalse(emailAvailable)
         verify(exactly = 1) { customerRepository.existsByEmail(email) }
-
     }
 
     fun buildCustomer(
