@@ -25,15 +25,14 @@ class CustomerRepositoryTest {
 
     @Test
     fun `should return name containing`() {
-        val alana = customerRepository.save(buildCustomer(name = "Alana"))
         val alice = customerRepository.save(buildCustomer(name = "Alice"))
+        val alana = customerRepository.save(buildCustomer(name = "Alana"))
         val fakeCustomers = listOf(alice, alana);
-        val pageable = Pageable.ofSize(fakeCustomers.size)
+        val pageable = Pageable.unpaged();
         val pageableCustomers = PageImpl<Customer>(fakeCustomers, pageable, fakeCustomers.size.toLong())
-        //customerRepository.save(buildCustomer(name = "Junior"))
+        customerRepository.save(buildCustomer(name = "Junior"))
 
-        val customers = customerRepository.findByNameContaining("Al", pageable)
-
+        val customers = customerRepository.findByNameContaining("Al", pageable);
         assertEquals(pageableCustomers, customers)
     }
 
@@ -52,9 +51,7 @@ class CustomerRepositoryTest {
         @Test
         fun `should return false when email do not exists`() {
             val email = "nonexistingemail@teste.com"
-
             val exists = customerRepository.existsByEmail(email)
-
             assertFalse(exists)
         }
     }
