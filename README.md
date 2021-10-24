@@ -6,5 +6,5 @@ A simple API for a books marketplace.
  - Spring Data
  - Events
  - Spring Security
- - Unit Tests with Mockk
+ - Unit and integration tests with Mockk, JUnit, MockMvc
  - JaCoCo
