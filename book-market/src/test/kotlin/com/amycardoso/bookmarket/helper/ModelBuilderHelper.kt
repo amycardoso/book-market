@@ -41,7 +41,7 @@ fun buildPurchase(
 fun buildBook(
     id: Int? = null,
     name: String = "book name",
-    price: BigDecimal = BigDecimal(0).setScale(2, RoundingMode.HALF_UP).stripTrailingZeros(),
+    price: BigDecimal = BigDecimal(Math.random()).setScale(2, RoundingMode.HALF_UP),
     customer: Customer? = null,
     status: BookStatus = BookStatus.ACTIVE
 ) = Book (
