@@ -4,8 +4,8 @@ import com.amycardoso.bookmarket.enums.BookStatus
 import com.amycardoso.bookmarket.helper.buildBook
 import com.amycardoso.bookmarket.helper.buildCustomer
 import com.amycardoso.bookmarket.model.Book
-import com.amycardoso.bookmarket.model.Customer
 import io.mockk.junit5.MockKExtension
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -44,7 +44,9 @@ class BookRepositoryTest {
         val pageableBooks = PageImpl<Book>(fakeBooks, pageable, fakeBooks.size.toLong())
 
         val books = bookRepository.findByStatus(deletedStatus, pageable);
-        Assertions.assertEquals(pageableBooks, books)
+
+        assertThat(pageableBooks).usingRecursiveFieldByFieldElementComparatorIgnoringFields("price")
+            .isEqualTo(books);
     }
 
 }

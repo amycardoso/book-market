@@ -32,6 +32,7 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.security:spring-security-test:5.5.2")
 	testImplementation("io.mockk:mockk:1.12.0")
+	testImplementation("org.assertj:assertj-core:3.21.0")
 
 	runtimeOnly("org.postgresql:postgresql")
 }
