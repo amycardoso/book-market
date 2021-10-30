@@ -49,4 +49,20 @@ class BookRepositoryTest {
             .isEqualTo(books);
     }
 
+    @Test
+    fun `should return book by customer`() {
+        val customer = customerRepository.save(buildCustomer())
+        val anotherCustomer = customerRepository.save(buildCustomer())
+
+        val book1 = bookRepository.save(buildBook(name = "book 1", customer = customer))
+        val book2 = bookRepository.save(buildBook(name = "book 2", customer = customer))
+        bookRepository.save(buildBook(name = "book 3", customer = anotherCustomer))
+
+        val fakeBooks = listOf(book1, book2);
+        val books = bookRepository.findByCustomer(customer);
+
+        assertThat(fakeBooks).usingRecursiveFieldByFieldElementComparatorIgnoringFields("price")
+            .isEqualTo(books);
+    }
+
 }
