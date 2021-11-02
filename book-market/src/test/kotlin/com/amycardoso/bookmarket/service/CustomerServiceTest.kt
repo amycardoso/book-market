@@ -3,6 +3,7 @@ package com.amycardoso.bookmarket.service
 import com.amycardoso.bookmarket.enums.CustomerStatus
 import com.amycardoso.bookmarket.enums.Role
 import com.amycardoso.bookmarket.exception.NotFoundException
+import com.amycardoso.bookmarket.helper.buildCustomer
 import com.amycardoso.bookmarket.model.Customer
 import com.amycardoso.bookmarket.repository.CustomerRepository
 import io.mockk.every
@@ -201,19 +202,5 @@ class CustomerServiceTest {
         assertFalse(emailAvailable)
         verify(exactly = 1) { customerRepository.existsByEmail(email) }
     }
-
-    fun buildCustomer(
-        id: Int? = null,
-        name: String = "customer name",
-        email: String = "${UUID.randomUUID()}@email.com",
-        password: String = "password"
-    ) = Customer (
-        id = id,
-        name = name,
-        email = email,
-        status = CustomerStatus.ACTIVE,
-        password = password,
-        roles = setOf(Role.CUSTOMER)
-    )
 
 }
