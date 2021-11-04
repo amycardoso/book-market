@@ -20,8 +20,14 @@ class CustomerRepositoryTest {
     @Autowired
     private lateinit var customerRepository: CustomerRepository
 
+    @Autowired
+    private lateinit var bookRepository: BookRepository
+
     @BeforeEach
-    fun setup() = customerRepository.deleteAll()
+    fun setup() {
+        bookRepository.deleteAll()
+        customerRepository.deleteAll()
+    }
 
     @Test
     fun `should return name containing`() {
