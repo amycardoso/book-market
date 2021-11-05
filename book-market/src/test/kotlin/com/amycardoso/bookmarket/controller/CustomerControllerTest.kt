@@ -4,6 +4,7 @@ import com.amycardoso.bookmarket.controller.request.PostCustomerRequest
 import com.amycardoso.bookmarket.controller.request.PutCustomerRequest
 import com.amycardoso.bookmarket.enums.CustomerStatus
 import com.amycardoso.bookmarket.helper.buildCustomer
+import com.amycardoso.bookmarket.repository.BookRepository
 import com.amycardoso.bookmarket.repository.CustomerRepository
 import com.amycardoso.bookmarket.security.UserCustomDetails
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -38,13 +39,16 @@ class CustomerControllerTest {
     private lateinit var customerRepository: CustomerRepository
 
     @Autowired
+    private lateinit var bookRepository: BookRepository
+
+    @Autowired
     private lateinit var objectMapper: ObjectMapper
 
     @BeforeEach
-    fun setup() = customerRepository.deleteAll()
-
-    @AfterEach
-    fun tearDown() = customerRepository.deleteAll()
+    fun setup() {
+        bookRepository.deleteAll()
+        customerRepository.deleteAll()
+    }
 
     @Test
     fun `should return all customers`() {
